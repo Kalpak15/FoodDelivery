@@ -24,6 +24,7 @@ app.get('/',(req,res)=>{
     return res.send('Food Delivery Server is running'); 
 })
 
+// get all menus
 app.get('/menus',async(req,res)=>{
   try{
         const responce = await Menu.find()
@@ -39,13 +40,13 @@ app.get('/menus',async(req,res)=>{
 })
 
 
-
+// add carts to the  cartItem
 app.post('/carts',async(req,res)=>{
    try{
          
-       const{menuItemId,name,email,quantity,price,image} = req.body
+       const cartItem = req.body
 
-       const CartResponce = await CartItem.insertOne({menuItemId,name,email,quantity,price,image})
+       const CartResponce = await CartItem.insertOne(cartItem)
        console.log(CartResponce)
 
        return res.status(200).json({
@@ -60,5 +61,69 @@ app.post('/carts',async(req,res)=>{
             message:"Not able to add item to cart"
         })
     }
-
+    
 })
+
+// get arts according to query email
+app.get('/carts',async(req,res)=>{
+    try{
+        
+        const email = req.query.email
+        const filter = {email:email}
+        console.log(email)
+        const AllCartItems = await CartItem.find(filter)
+        console.log(AllCartItems)
+        res.send(AllCartItems)
+    }
+    catch(error){
+        return res.status(500).json({
+            message:"Not able to Fetch item from cart"
+        })
+    }
+    
+})
+
+app.get('/carts/:id',async(req,res)=>{
+     try{
+            const id = req.params.id
+            const filter  = {_id: new ObjectId(id)}
+            const responce = await CartItem.findOne(filter)
+            res.send(responce)
+     }
+     catch(error){
+         return res.status(500).json({
+             message:"Not able to delete item from cart"
+         })
+        }
+    })
+    
+    
+    app.put('/carts/:id',async(req,res)=>{
+        try{
+              
+             
+
+        }
+        catch(error){
+            return res.status(500).json({
+                message:"Not able to delete item from cart"
+            })
+    
+   }
+})
+
+
+app.delete('/carts/:id',async(req,res)=>{
+    try{
+        const id = req.params.id
+        const filter  = {_id: new ObjectId(id)}
+        const responce = await CartItem.deleteOne(filter)
+        res.send(responce)
+    }
+    catch(error){
+        return res.status(500).json({
+            message:"Not able to delete item from cart"
+        })
+    }
+})
+
