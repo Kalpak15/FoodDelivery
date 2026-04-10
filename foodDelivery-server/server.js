@@ -24,64 +24,22 @@ app.get('/',(req,res)=>{
     return res.send('Food Delivery Server is running'); 
 })
 
+
+const menuRoutes = require('./routes/menuRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+
+app.use('/menus',menuRoutes)
+app.use('/carts',cartRoutes)
+
+
+
 // get all menus
-app.get('/menus',async(req,res)=>{
-  try{
-        const responce = await Menu.find()
-   
-
-        return res.status(200).send(responce)
-  }
-  catch(error){
-    return res.status(500).json({
-        message:"Not able to fetch"
-    })
-  }
-})
 
 
-// add carts to the  cartItem
-app.post('/carts',async(req,res)=>{
-   try{
-         
-       const cartItem = req.body
 
-       const CartResponce = await CartItem.insertOne(cartItem)
-       console.log(CartResponce)
-
-       return res.status(200).json({
-         message:"The updated Responce we get.",
-         data:CartResponce
-       })
-
-
-   }
-    catch(error){
-        return res.status(500).json({
-            message:"Not able to add item to cart"
-        })
-    }
-    
-})
 
 // get arts according to query email
-app.get('/carts',async(req,res)=>{
-    try{
-        
-        const email = req.query.email
-        const filter = {email:email}
-        console.log(email)
-        const AllCartItems = await CartItem.find(filter)
-        console.log(AllCartItems)
-        res.send(AllCartItems)
-    }
-    catch(error){
-        return res.status(500).json({
-            message:"Not able to Fetch item from cart"
-        })
-    }
-    
-})
+
 
 app.get('/carts/:id',async(req,res)=>{
      try{
@@ -126,4 +84,32 @@ app.delete('/carts/:id',async(req,res)=>{
         })
     }
 })
+
+app.put('/carts/:id',async(req,res)=>{
+       
+    try{
+        const id =  req.params.id
+        const quantity = req.body.quantity
+        const filter = {_id: new ObjectId(id)};
+        const options = {upsert:true}
+ 
+        const updateDoc = {
+            $set: {
+                quantity: parseInt(quantity, 10)
+            }
+        };
+
+        const responce = await CartItem.updateOne(filter,updateDoc,options)
+        res.send(responce)
+    }
+    catch(error){
+        return res.status(500).json({
+            message:"Not able to update item from cart"
+        })
+    }
+
+       
+})
+
+
 

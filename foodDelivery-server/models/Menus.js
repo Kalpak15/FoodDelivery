@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
+
 const menuSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        trim:true,
+        required: true,
+        minlength: 3,
     },
     recipe:{
         type:String,

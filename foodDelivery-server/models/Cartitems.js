@@ -13,6 +13,9 @@ const cartItemSchema = new mongoose.Schema({
         type: String,
         required:true
     },
+    recipe:{
+        type:String,
+    },
     quantity:{
         type: Number,
         required:true
