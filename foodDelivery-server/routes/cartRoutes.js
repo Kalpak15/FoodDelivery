@@ -10,6 +10,7 @@ router.post('/',addToCart)
 router.delete('/:id',deleteCart)
 router.put('/:id',updateCartQuantity)
 router.get('/:id',getCartById)
+// router.put('/:id',getCartById)
 
 
 

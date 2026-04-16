@@ -111,7 +111,7 @@ const updateCartQuantity = async(req,res)=>{
 const getCartById = async(req,res)=>{
      try{
             const id = req.params.id
-            const responce = await CartItems.findOne({_id:id})
+            const responce = await CartItems.findById(id)
             res.status(200).send(responce)
      }
      catch(error){
