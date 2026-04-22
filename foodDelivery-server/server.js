@@ -23,20 +23,22 @@ app.post('/jwt',async(req,res)=>{
 })
 
 
+app.get('/',(req,res)=>{
+    return res.send('Food Delivery Server is running'); 
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 }); 
 
 
 
-app.get('/',(req,res)=>{
-    return res.send('Food Delivery Server is running'); 
-})
 
 
 const menuRoutes = require('./routes/menuRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const userRoutes = require('./routes/userRoutes');
+const veriftoken = require('./middleware/verifyToken');
 
 app.use('/menus',menuRoutes)
 app.use('/carts',cartRoutes)
