@@ -38,7 +38,7 @@ const UpdateMenu = () => {
       };
 
       // console.log(menuItem);
-      const postMenuItem = axiosSecure.patch(`/menu/${item._id}`, menuItem);
+      const postMenuItem = axiosSecure.patch(`/menus/${item._id}`, menuItem);
       if (postMenuItem) {
         reset();
         Swal.fire({

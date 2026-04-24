@@ -33,7 +33,7 @@ const AddMenu = () => {
       };
 
       // console.log(menuItem);
-      const postMenuItem = axiosSecure.post("/menu", menuItem);
+      const postMenuItem = axiosSecure.post("/menus", menuItem);
       if (postMenuItem) {
         reset();
         Swal.fire({

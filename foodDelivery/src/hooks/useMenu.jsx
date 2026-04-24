@@ -12,7 +12,7 @@ const useMenu = () => {
   } = useQuery({
     queryKey: ["menu"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/menu");
+      const res = await axiosPublic.get("/menus");
       console.log(res.data);
       return res.data;
     },

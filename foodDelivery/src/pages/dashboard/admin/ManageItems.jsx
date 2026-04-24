@@ -22,7 +22,7 @@ const ManageItems = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await axiosSecure.delete(`/menu/${item._id}`);
+        const res = await axiosSecure.delete(`/menus/${item._id}`);
         // console.log(res);
         if (res) {
           refetch();
