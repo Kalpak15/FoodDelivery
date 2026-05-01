@@ -50,6 +50,14 @@ const singleMenuItem = async(req,res)=>{
      try{
          const menuId = req.params.id
          const menu = await Menu.findById(menuId)
+         if (!menu) {
+                return res.status(404).json({
+                    message: "Menu Item Not Found",
+                });
+          }
+
+            return res.status(200).json(menu);
+
         }
         catch(error){
             return res.status(500).json({
@@ -65,7 +73,7 @@ const updateMenuItem = async(req,res)=>{
            const menuId = req.params.id
            const {name,recipe,image,category,price} = req.body
 
-           const updateMenu = await Menu.findByIdAndUpdate(menuId,{name,recipe,image,category,price},{new:true , runValidator:true})
+           const updateMenu = await Menu.findByIdAndUpdate(menuId,{name,recipe,image,category,price},{new: true , runValidator: true})
            if(!updateMenu){
                return res.status(404).json({
                    message:"Menu Item Not Found"
@@ -79,8 +87,6 @@ const updateMenuItem = async(req,res)=>{
             message:error.message
          })
       }
-
-
 }
 
 
